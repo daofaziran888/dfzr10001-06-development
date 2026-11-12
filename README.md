@@ -73,5 +73,27 @@ npm run dev
 - 列表接口统一返回 `{ items, total, page, size }`，动作接口统一返回 `{ ok, message }`。
 - 状态流转只允许在 `app/services` 里改，路由层不做业务判断。
 
+## 调度冲突裁决与改期
+
+调度计划只能沿「草稿 → 待校验 → 已启用 → 待确认」四个阶段顺向推进，逆向或跳级动作会被拦截。
+
+- `POST /api/schedule/arbitrate`：对已启用计划按争用窗口（默认 10 分钟）分组裁决。
+  同窗口先比优先级（数值越大业务影响越高，优先级不同只看优先级），优先级相同再依次比较
+  关联任务、调度表达式、超时阈值、失败策略、通知渠道，创建顺序兜底。
+- 胜方占用原窗口不重排；负方保留原快照（原窗口、通知渠道可查）转入待确认，并生成
+  新编号 `SCHE-R-xxxx` 的待确认改期条目，改期时间回写采集任务的`下次运行时间`。
+- 裁决按批次幂等：重复提交只保留第一个裁决结果；`POST /api/schedule/batches/{批次}/start`
+  启动批次时才固化失败策略，且只作用于该批次。
+- `POST /api/schedule/recover`：跨日恢复只重排待确认改期条目，已启动批次不追溯重排。
+- `GET /api/schedule/pending` 是工作台口径，前端调度页同步展示待确认计划与确认动作。
+
+### 后端测试
+
+```bash
+cd backend
+.venv/bin/pip install -r requirements-dev.txt
+.venv/bin/python -m pytest tests/ -v
+```
+
 领域：数据工程
 子方向：数据采集、爬虫与RPA

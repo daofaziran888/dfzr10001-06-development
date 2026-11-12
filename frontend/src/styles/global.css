@@ -33,3 +33,30 @@ body { margin: 0; background: #f6f8fb; color: #1f2937; }
 .link { border: none; background: none; color: var(--brand); cursor: pointer; padding: 0; }
 .page-foot { display: flex; justify-content: space-between; margin-top: 8px; font-size: 12px; color: var(--muted); }
 .error-text { color: #b42318; }
+.ok-text { color: #027a48; }
+
+/* 状态标签：四阶段一眼可辨 */
+.status-tag { display: inline-block; padding: 2px 8px; border-radius: 999px; font-size: 12px; border: 1px solid var(--border); white-space: nowrap; }
+.status-tag.is-draft { background: #f1f5f9; color: #475569; }
+.status-tag.is-review { background: #fff7e6; color: #b45309; border-color: #f5d199; }
+.status-tag.is-enabled { background: #e8f3ff; color: #1f6feb; border-color: #b6d4fe; }
+.status-tag.is-pending { background: #fef3f2; color: #b42318; border-color: #f3c2bd; }
+
+/* 工作台与裁决批次区块 */
+.section-title { display: flex; align-items: center; gap: 8px; margin: 18px 0 8px; font-size: 15px; }
+.section-title .count-badge { background: var(--brand); color: #fff; border-radius: 999px; font-size: 12px; padding: 1px 8px; }
+.section-actions { margin-left: auto; display: flex; gap: 8px; }
+.snapshot-box { background: #f8fafc; border: 1px solid var(--border); border-radius: 6px; padding: 8px 10px; font-size: 12px; color: #334155; line-height: 1.7; }
+
+/* 弹层与表单 */
+.modal-mask { position: fixed; inset: 0; background: rgba(15, 23, 42, 0.45); display: flex; align-items: center; justify-content: center; z-index: 50; }
+.modal-card { background: #fff; border-radius: 10px; width: min(680px, 92vw); max-height: 86vh; overflow: auto; padding: 18px 20px; }
+.modal-head { display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; }
+.modal-title { margin: 0; font-size: 16px; }
+.form-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px 14px; }
+.form-grid label { display: flex; flex-direction: column; gap: 4px; font-size: 12px; color: var(--muted); }
+.form-grid input, .form-grid select { padding: 6px 8px; border: 1px solid var(--border); border-radius: 6px; font-size: 13px; }
+.modal-foot { display: flex; justify-content: flex-end; gap: 8px; margin-top: 14px; }
+.muted-text { color: var(--muted); font-size: 12px; }
+.btn.small { padding: 3px 10px; font-size: 12px; }
+.btn.danger { color: #b42318; border-color: #f3c2bd; }
